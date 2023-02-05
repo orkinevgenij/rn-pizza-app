@@ -6,6 +6,7 @@ import { TSort } from './filterPizzaSlice'
 export type TFetchPizzasArgs = {
   sort: TSort
   category: string
+  orderType: string
 }
 
 export type TPizza = {
@@ -33,9 +34,9 @@ const initialState: IPizzaSliceState = {
 export const fetchPizzas = createAsyncThunk<TPizza[], TFetchPizzasArgs>(
   'pizza/fetchPizzaStatus',
   async params => {
-    const { sort, category } = params
+    const { sort, category, orderType } = params
     const { data } = await axios.get<TPizza[]>(
-      `https://63cadd354f53a004202cba12.mockapi.io/items?${category}&sortBy=${sort.sortProperty}`,
+      `https://63cadd354f53a004202cba12.mockapi.io/items?${category}&sortBy=${sort.sortProperty}&order=${orderType}`,
     )
     return data
   },

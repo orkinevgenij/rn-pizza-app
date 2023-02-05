@@ -1,5 +1,5 @@
-import { View, Text, ActivityIndicator } from 'react-native'
 import React from 'react'
+import { View, Text, ActivityIndicator } from 'react-native'
 import colors from '../styles/colors'
 
 export const Loader: React.FC = () => {

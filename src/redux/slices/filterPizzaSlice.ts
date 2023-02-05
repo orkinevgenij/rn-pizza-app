@@ -14,6 +14,7 @@ export type TSort = {
 type TFilterSliceState = {
   categoryId: number
   sort: TSort
+  orderType: string
 }
 const initialState: TFilterSliceState = {
   categoryId: 0,
@@ -21,6 +22,7 @@ const initialState: TFilterSliceState = {
     name: 'По популярности',
     sortProperty: SortPropertyEnum.RATING,
   },
+  orderType: '',
 }
 
 const filterPizzaSlice = createSlice({
@@ -33,9 +35,12 @@ const filterPizzaSlice = createSlice({
     setSortType(state, { payload }) {
       state.sort = payload
     },
+    setOrderType(state, { payload }) {
+      state.orderType = payload
+    },
   },
 })
 export const filterSelector = (state: RootState) => state.filter
 
-export const { setCategoryId, setSortType } = filterPizzaSlice.actions
+export const { setCategoryId, setSortType, setOrderType } = filterPizzaSlice.actions
 export default filterPizzaSlice.reducer

@@ -1,18 +1,32 @@
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { FlashList } from '@shopify/flash-list'
 import React from 'react'
-import { TouchableOpacity, View } from 'react-native'
-import { Text } from 'react-native-paper'
-import { add } from 'react-native-reanimated'
+import { Alert, Text, TouchableOpacity, View } from 'react-native'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useSelector } from 'react-redux'
+import { CartEmpty } from '../components/CartEmpty'
 import { CartItem } from '../components/CartItem'
-import { addToCart, cartSelector, clearItems } from '../redux/slices/cartSlice'
+import { cartSelector, clearItems } from '../redux/slices/cartSlice'
 import { useAppDispatch } from '../redux/store'
 import colors from '../styles/colors'
 import { globalStyles } from '../styles/globalStyles'
+import { HomeStackParams } from '../types/types'
 
-export const CartScreen: React.FC = () => {
-  const { cartItems } = useSelector(cartSelector)
+type TProps = {
+  navigation: NativeStackNavigationProp<HomeStackParams>
+}
+
+export const CartScreen: React.FC<TProps> = ({ navigation }) => {
+  const { cartItems, totalPrice } = useSelector(cartSelector)
   const dispatch = useAppDispatch()
+
+  const onClickOrderPizzas = () => {
+    navigation.navigate('OrderScreen')
+    dispatch(clearItems())
+  }
+  if (!totalPrice) {
+    return <CartEmpty />
+  }
   return (
     <View style={globalStyles.container}>
       <FlashList
@@ -20,16 +34,19 @@ export const CartScreen: React.FC = () => {
         renderItem={({ item }) => <CartItem {...item} />}
         estimatedItemSize={200}
       />
-      {cartItems.length > 0 && (
+      <View
+        style={{
+          flexDirection: 'row',
+        }}
+      >
         <TouchableOpacity
-          onPress={() => dispatch(clearItems())}
+          onPress={onClickOrderPizzas}
           activeOpacity={0.5}
           style={{
             backgroundColor: colors.orange,
-            width: '100%',
-            height: 50,
-            justifyContent: 'center',
-            alignItems: 'center',
+            paddingHorizontal: 15,
+            paddingVertical: 15,
+            width: '70%',
           }}
         >
           <Text
@@ -41,7 +58,39 @@ export const CartScreen: React.FC = () => {
             Оформити заказ
           </Text>
         </TouchableOpacity>
-      )}
+        <TouchableOpacity
+          onPress={() =>
+            Alert.alert(
+              'Ви точно бажаєте очистити кошик?',
+              '',
+              [
+                {
+                  text: 'Очистити',
+                  onPress: () => dispatch(clearItems()),
+                },
+                {
+                  text: 'Скасувати',
+                  style: 'cancel',
+                },
+              ],
+              { cancelable: true },
+            )
+          }
+          style={{
+            backgroundColor: 'red',
+            paddingHorizontal: 15,
+            paddingVertical: 15,
+            alignItems: 'center',
+            width: '30%',
+          }}
+        >
+          <MaterialIcons
+            name='cleaning-services'
+            size={25}
+            color='#fff'
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }

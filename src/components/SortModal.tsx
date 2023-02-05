@@ -2,10 +2,16 @@ import React, { useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { FlashList } from '@shopify/flash-list'
 import Modal from 'react-native-modal'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 import colors from '../styles/colors'
 import { useSelector } from 'react-redux'
-import { filterSelector, setSortType, SortPropertyEnum } from '../redux/slices/filterPizzaSlice'
+import {
+  filterSelector,
+  setOrderType,
+  setSortType,
+  SortPropertyEnum,
+} from '../redux/slices/filterPizzaSlice'
 import { useAppDispatch } from '../redux/store'
 
 type TSortItem = {
@@ -31,11 +37,14 @@ export const SortModal: React.FC = () => {
 
   return (
     <>
-      <TouchableOpacity
-        style={{ alignSelf: 'center' }}
-        onPress={() => setIsOpen(true)}
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'row',
+        }}
       >
-        <Text
+        <TouchableOpacity
           style={{
             backgroundColor: '#f9f9f9',
             paddingHorizontal: 10,
@@ -43,15 +52,36 @@ export const SortModal: React.FC = () => {
             borderRadius: 15,
             width: 140,
             height: 40,
-            textAlign: 'center',
-            color: colors.orange,
-            fontSize: 14,
-            fontWeight: '500',
           }}
+          onPress={() => setIsOpen(true)}
         >
-          {sort.name}
-        </Text>
-      </TouchableOpacity>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: colors.orange,
+              fontSize: 14,
+              fontWeight: '500',
+            }}
+          >
+            {sort.name}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => dispatch(setOrderType('asc'))}>
+          <AntDesign
+            name='arrowdown'
+            size={23}
+            color={colors.orange}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => dispatch(setOrderType('desc'))}>
+          <AntDesign
+            name='arrowup'
+            size={23}
+            color={colors.orange}
+          />
+        </TouchableOpacity>
+      </View>
+
       <Modal
         style={{
           flex: 1,

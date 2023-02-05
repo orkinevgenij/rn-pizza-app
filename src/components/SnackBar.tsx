@@ -5,10 +5,10 @@ import { fetchPizzas, Status, TFetchPizzasArgs } from '../redux/slices/pizzaSlic
 import { useAppDispatch } from '../redux/store'
 import colors from '../styles/colors'
 
-type Props = {
+type TProps = {
   status: Status
 }
-export const SnackBar: React.FC<Props> = ({ status }) => {
+export const SnackBar: React.FC<TProps> = ({ status }) => {
   const [visible, setVisible] = React.useState(true)
   const dispatch = useAppDispatch()
 

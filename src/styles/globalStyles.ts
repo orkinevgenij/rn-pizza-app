@@ -7,11 +7,12 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   textStyle: {
-    fontSize: 14,
+    fontSize: 15,
     color: colors.black,
   },
   titleStyle: {
     fontSize: 20,
+    fontWeight: '500',
     color: colors.black,
   },
   typeStyle: {
@@ -39,9 +40,9 @@ export const globalStyles = StyleSheet.create({
   },
   buttonStyle: {
     backgroundColor: colors.orange,
-    borderRadius: 10,
+    borderRadius: 20,
     paddingHorizontal: 50,
-    paddingVertical: 10,
+    paddingVertical: 15,
     color: '#fff',
   },
 })

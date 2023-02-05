@@ -1,12 +1,13 @@
-import { FlashList } from '@shopify/flash-list'
-import React from 'react'
+import React, { memo } from 'react'
 import { Text, TouchableOpacity } from 'react-native'
+import { FlashList } from '@shopify/flash-list'
 import colors from '../styles/colors'
 type Props = {
   onChangeCategoryId: (index: number) => void
 }
 const categories: string[] = ['Усі', 'М`ясні', 'Вегетаріанські', 'Сирні']
-export const Categories: React.FC<Props> = ({ onChangeCategoryId }) => {
+
+const Categories: React.FC<Props> = ({ onChangeCategoryId }) => {
   return (
     <FlashList
       data={categories}
@@ -30,3 +31,4 @@ export const Categories: React.FC<Props> = ({ onChangeCategoryId }) => {
     />
   )
 }
+export default memo(Categories)
